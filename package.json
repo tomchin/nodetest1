@@ -1,0 +1,20 @@
+{
+  "name": "nodetest1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "server": "echo \"Starting Server...\" && nodemon server3.js",
+    "worker": "node worker3.js",
+    "test": "concurrently \"npm run server\" \"npm run worker\""
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "concurrently": "^4.0.1",
+    "express": "^4.16.4",
+    "nodemon": "^1.18.9",
+    "socket.io": "^2.2.0"
+  }
+}
