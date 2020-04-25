@@ -3,6 +3,7 @@
 const cluster = require('cluster');
 const axios = require('axios');
 
+// connect to both server3 & server4
 const url_str = "http://localhost:8028";
 const NUM_WORKER = require('os').cpus().length - 1;
 const DEBUG_LOG = false;
@@ -31,6 +32,16 @@ socket.on("connect", () => {
 socket.on('notify', (msg) => {
     print_dot('.', ".. notify " + JSON.stringify(msg));
     if (!cluster.isMaster && msg.agent == "all") Worker_read();
+})
+
+// server4 (feather) listener https://docs.feathersjs.com/api/client/socketio.html
+socket.on('space created', (msg) => {
+    print_dot('.', ".. created " + JSON.stringify(msg));
+    if (!cluster.isMaster) {
+        let data = "#" + cluster.worker.id
+        print_dot('-', "=> read " + data);
+        socket.emit('find', 'space');
+    }
 })
 
 // built-in listener (life cycle events)
